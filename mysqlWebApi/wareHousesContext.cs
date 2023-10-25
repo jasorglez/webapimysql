@@ -5,15 +5,15 @@ using mysqlWebApi.Models;
 
 namespace mysqlWebApi;
 
-public partial class MagallanesContext : DbContext
+public partial class wareHousesContext : DbContext
 {
 
-    public virtual DbSet<Bancos> Bancos { get; set; }
+    public virtual DbSet<Banks> Bancos { get; set; }
 
-    public virtual DbSet<Usuarios> Usuarios { get; set; }
+    public virtual DbSet<Users> Users { get; set; }
 
 
-    public MagallanesContext(DbContextOptions<MagallanesContext> options)  : base(options) {  }
+    public wareHousesContext(DbContextOptions<wareHousesContext> options)  : base(options) {  }
   
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -21,7 +21,7 @@ public partial class MagallanesContext : DbContext
             .UseCollation("latin1_spanish_ci")
             .HasCharSet("latin1");
 
-        modelBuilder.Entity<Bancos>(entity =>
+        modelBuilder.Entity<Banks>(entity =>
         {
             entity.HasKey(e => e.IId).HasName("PRIMARY");
 
@@ -64,12 +64,72 @@ public partial class MagallanesContext : DbContext
                 .HasCharSet("latin1");
         });
 
-        modelBuilder.Entity<Usuarios>(entity =>
+        modelBuilder.Entity<Moneymovement>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
             entity
-                .ToTable("usuarios")
+                .ToTable("moneymovements")
+                .HasCharSet("utf32")
+                .UseCollation("utf32_spanish_ci");
+
+            entity.HasIndex(e => e.Tipomovimiento, "TIPO");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Active)
+                .HasDefaultValueSql("'1'")
+                .HasColumnName("active");
+            entity.Property(e => e.Amount)
+                .HasColumnType("float(10,3)")
+                .HasColumnName("amount");
+            entity.Property(e => e.Date).HasColumnName("date");
+            entity.Property(e => e.Description)
+                .HasColumnType("tinytext")
+                .HasColumnName("description")
+                .UseCollation("latin1_spanish_ci")
+                .HasCharSet("latin1");
+            entity.Property(e => e.Reference)
+                .HasMaxLength(80)
+                .HasDefaultValueSql("'REFERENCIA'")
+                .HasColumnName("reference")
+                .UseCollation("latin1_spanish_ci")
+                .HasCharSet("latin1");
+            entity.Property(e => e.Status)
+                .HasDefaultValueSql("'PENDIENTE'")
+                .HasColumnType("enum('PAGADA','ENTREGADA','PENDIENTE')")
+                .HasColumnName("status")
+                .UseCollation("latin1_spanish_ci")
+                .HasCharSet("latin1");
+            entity.Property(e => e.Tipomovimiento).HasColumnName("tipomovimiento");
+
+            entity.HasOne(d => d.TipomovimientoNavigation).WithMany(p => p.Moneymovements)
+                .HasForeignKey(d => d.Tipomovimiento)
+                .HasConstraintName("TIPO");
+        });
+
+        modelBuilder.Entity<Typemovement>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity
+                .ToTable("typemovements")
+                .UseCollation("latin1_swedish_ci");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Active)
+                .HasDefaultValueSql("'1'")
+                .HasColumnName("active");
+            entity.Property(e => e.Description)
+                .HasMaxLength(255)
+                .HasColumnName("description");
+        });
+
+        modelBuilder.Entity<Users>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity
+                .ToTable("users")
                 .HasCharSet("utf8mb4")
                 .UseCollation("utf8mb4_0900_ai_ci");
 
@@ -83,10 +143,10 @@ public partial class MagallanesContext : DbContext
                 .HasColumnName("mail")
                 .UseCollation("latin1_spanish_ci")
                 .HasCharSet("latin1");
-            entity.Property(e => e.Nombre)
+            entity.Property(e => e.Name)
                 .HasMaxLength(80)
                 .HasDefaultValueSql("'NOMBRE'")
-                .HasColumnName("nombre")
+                .HasColumnName("name")
                 .UseCollation("latin1_spanish_ci")
                 .HasCharSet("latin1");
             entity.Property(e => e.Password)
@@ -95,10 +155,10 @@ public partial class MagallanesContext : DbContext
                 .HasColumnName("password")
                 .UseCollation("latin1_spanish_ci")
                 .HasCharSet("latin1");
-            entity.Property(e => e.Puesto)
+            entity.Property(e => e.Position)
                 .HasMaxLength(50)
                 .HasDefaultValueSql("'PUESTO'")
-                .HasColumnName("puesto")
+                .HasColumnName("position")
                 .UseCollation("latin1_spanish_ci")
                 .HasCharSet("latin1");
             entity.Property(e => e.Usuario)

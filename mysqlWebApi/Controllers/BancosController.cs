@@ -22,14 +22,14 @@ namespace mysqlWebApi.Controllers
             }
 
             [HttpPost]
-            public IActionResult Post([FromBody] Bancos bancos)
+            public IActionResult Post([FromBody] Banks bancos)
             {
                 BancosService.Save(bancos);
                 return Ok();
             }
 
             [HttpPut]
-            public IActionResult Put(int id, [FromBody] Bancos bancos)
+            public IActionResult Put(int id, [FromBody] Banks bancos)
             {
                 BancosService.Update(id, bancos);
                 return Ok();

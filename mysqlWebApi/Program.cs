@@ -11,9 +11,9 @@ var _cnx = _config.GetConnectionString("mysqlconexion");
                                        
 //builder.Services.AddMySql<MagallanesContext>(_cnx, new MySqlServerVersion(new Version(8, 0, 27)));
 
-var serverVersion = new MySqlServerVersion(new Version(8, 0, 29));
+var serverVersion = new MySqlServerVersion(new Version(8, 1, 0));
 
-builder.Services.AddDbContext<MagallanesContext>(
+builder.Services.AddDbContext<wareHousesContext>(
             dbContextOptions => dbContextOptions
             .UseMySql(_cnx, serverVersion)
 

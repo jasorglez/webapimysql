@@ -5,24 +5,24 @@ namespace mysqlWebApi.Services
     public class BancosService : IBancosService
 
         {
-            MagallanesContext context;
+            wareHousesContext context;
 
-            public BancosService(MagallanesContext dbcontext)
+            public BancosService(wareHousesContext dbcontext)
             {
                 this.context = dbcontext;
             }
-            public IEnumerable<Bancos> Get()
+            public IEnumerable<Banks> Get()
             {
                 return context.Bancos;
             }
 
-            public async Task Save(Bancos bancos)
+            public async Task Save(Banks bancos)
             {
                 context.Add(bancos);
                 await context.SaveChangesAsync();
             }
 
-            public async Task Update(int id, Bancos bancos)
+            public async Task Update(int id, Banks bancos)
             {
                 var bancoActual = context.Bancos.Find(id);
                 if (bancoActual != null)
@@ -55,9 +55,9 @@ namespace mysqlWebApi.Services
 
         public interface IBancosService
         {
-            IEnumerable<Bancos> Get();
-            Task Save(Bancos bancos);
-            Task Update(int id, Bancos bancos);
+            IEnumerable<Banks> Get();
+            Task Save(Banks bancos);
+            Task Update(int id, Banks bancos);
             Task Delete(int id);
 
         }

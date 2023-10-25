@@ -4,33 +4,33 @@ namespace mysqlWebApi.Services
 {
     public class UsuariosService : IUsuariosService
     {
-        MagallanesContext context;
+        wareHousesContext context;
 
-        public UsuariosService(MagallanesContext dbcontext)
+        public UsuariosService(wareHousesContext dbcontext)
         {
             this.context = dbcontext;
         }
-        public IEnumerable<Usuarios> Get()
+        public IEnumerable<Users> Get()
         {
-            return context.Usuarios;
+            return context.Users;
         }
 
-        public async Task Save(Usuarios usuarios)
+        public async Task Save(Users usuarios)
         {
             context.Add(usuarios);
             await context.SaveChangesAsync();
         }
 
-        public async Task Update(int id, Usuarios usuarios)
+        public async Task Update(int id, Users usuarios)
         {
-            var usuarioActual = context.Usuarios.Find(id);
+            var usuarioActual = context.Users.Find(id);
             if (usuarioActual != null)
             {
                 usuarioActual.Usuario = usuarios.Usuario;
                 usuarioActual.Password = usuarios.Password;
-                usuarioActual.Nombre = usuarios.Nombre;
+                usuarioActual.Name = usuarios.Name;
                 usuarioActual.Mail = usuarios.Mail;
-                usuarioActual.Puesto = usuarios.Puesto;
+                usuarioActual.Position = usuarios.Position;
                 await context.SaveChangesAsync();
             }
             
@@ -38,7 +38,7 @@ namespace mysqlWebApi.Services
 
         public async Task Delete(int id)
         {
-            var usuarioActual = context.Usuarios.Find(id);
+            var usuarioActual = context.Users.Find(id);
             if (usuarioActual != null)
             {
                 
@@ -52,9 +52,9 @@ namespace mysqlWebApi.Services
 
     public interface IUsuariosService
     {
-        IEnumerable<Usuarios> Get();
-        Task Save(Usuarios usuarios);
-        Task Update(int id, Usuarios usuarios);
+        IEnumerable<Users> Get();
+        Task Save(Users usuarios);
+        Task Update(int id, Users usuarios);
         Task Delete(int id);
 
     }

@@ -1,0 +1,2 @@
+Scaffold-DbContext "Server=containers-us-west-37.railway.app;Port=6166;Database=warehouses;
+User=root;Password=DKiXutchMgN5JID9sFnO" Pomelo.EntityFrameworkCore.MySql -OutputDir Models -Force

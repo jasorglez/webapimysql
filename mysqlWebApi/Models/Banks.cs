@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace mysqlWebApi.Models;
 
-public partial class Bancos
+public partial class Banks
 {
     public int IId { get; set; }
 

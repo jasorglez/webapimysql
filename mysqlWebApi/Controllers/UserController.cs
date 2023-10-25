@@ -22,14 +22,14 @@ namespace mysqlWebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Usuarios usuarios)
+        public IActionResult Post([FromBody] Users usuarios)
         {
             UsuariosService.Save(usuarios);
             return Ok();
         }
 
         [HttpPut]
-        public IActionResult Put(int id, [FromBody] Usuarios usuarios)
+        public IActionResult Put(int id, [FromBody] Users usuarios)
         {
             UsuariosService.Update(id,usuarios);
             return Ok();
